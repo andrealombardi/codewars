@@ -1,6 +1,9 @@
+package test.java.battleship;
+
+import main.java.battleship.BattleShips;
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
-import org.junit.runners.JUnit4;
+
 import java.util.*;
 
 public class BattleShipsTest {

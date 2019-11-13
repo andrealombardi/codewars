@@ -1,3 +1,5 @@
+package main.java.battleship;
+
 import java.awt.*;
 import java.util.*;
 import java.util.List;
