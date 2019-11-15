@@ -3,12 +3,48 @@
  */
 package tosmallest;
 
+import org.w3c.dom.ls.LSOutput;
+
+import java.util.Arrays;
+import java.util.stream.Collectors;
+
 public class App {
-    public String getGreeting() {
-        return "Hello world.";
-    }
 
     public static void main(String[] args) {
-        System.out.println(new App().getGreeting());
+
+        //char[] chars = String.valueOf(261235).toCharArray();
+        char[] chars = String.valueOf(50059917).toCharArray();
+
+        int index = Integer.MAX_VALUE;
+        char digit = Character.MAX_VALUE;
+
+        for(int i = 0; i < chars.length; i++) {
+            if(chars[i] < digit) {
+                digit = chars[i];
+                index = i;
+            }
+        }
+
+        if (index == 1) {
+            while(chars[0]  > chars[index + 1]){
+                index ++;
+            }
+            char temp = chars[0];
+            chars[0] = chars[index];
+            chars[index] = temp;
+
+            long smallest = Long.parseLong(new String(chars));
+            long[] longs = {smallest, 0, index};
+
+            System.out.println(Arrays.toString(chars));
+
+            System.out.println("Index is:" + index);
+
+        }
+
+
+        System.out.println("index is " + index + " char is " + digit);
+
     }
+
 }

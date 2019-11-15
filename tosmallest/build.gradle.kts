@@ -9,9 +9,6 @@
 plugins {
     // Apply the java plugin to add support for Java
     java
-
-    // Apply the application plugin to add support for building a CLI application.
-    application
 }
 
 repositories {
@@ -26,9 +23,4 @@ dependencies {
 
     // Use JUnit test framework
     testImplementation("junit:junit:4.12")
-}
-
-application {
-    // Define the main class for the application.
-    mainClassName = "tosmallest.App"
 }
