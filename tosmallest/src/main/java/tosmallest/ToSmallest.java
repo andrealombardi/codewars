@@ -1,51 +1,39 @@
 package tosmallest;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.stream.Collectors;
+import java.util.Comparator;
+import java.util.stream.IntStream;
 
 public class ToSmallest {
 
     public static long[] smallest(long n) {
 
-        char[] chars = String.valueOf(n).toCharArray();
-        char[] sorted = String.valueOf(n).toCharArray();
-        Arrays.sort(sorted);
+        var s = String.valueOf(n);
+        var comparator = Comparator.<Candidate>comparingLong(c -> c.n).thenComparingLong(c -> c.i).thenComparingLong(c -> c.j);
 
-        char smallest = Character.MAX_VALUE;
-        int index_of_smallest = Integer.MAX_VALUE;
-        int index_of_replace = Integer.MAX_VALUE;
+        return IntStream.range(0, s.length()).boxed()
+                .flatMap(i -> (IntStream.range(0, s.length()).boxed()
+                        .map(j -> new Candidate(s, i, j))))
+                .min(comparator).map(Candidate::toArray).orElseThrow();
+    }
 
-        boolean not_found = true;
-        for (int i = 0; i < sorted.length && not_found; i++) {
-            for (int j = 0; j < chars.length && not_found; j++) {
-                if(chars[j] == sorted[i] && j>0) {
-                    for (int k = 0; k < j && not_found; k++) {
-                        if (chars[k] > chars[j]) {
-                            index_of_smallest = j;
-                            index_of_replace = k;
-                            smallest = chars[j];
-                            not_found = false;
-                        }
-                    }
-                }
-            }
+    static class Candidate {
+        long n, i, j;
+
+        Candidate(String s, int i, int j) {
+            this.n = build(s, i, j); this.i = i; this.j = j;
         }
 
+        long[] toArray() {
+            return new long[]{n, i, j};
+        }
 
-        if (index_of_smallest == 1) {
-            while(chars[0]  > chars[index_of_smallest + 1]){
-                index_of_smallest ++;
-            }
-            chars[index_of_smallest] = chars[0];
-            chars[0] = smallest;
-            return new long[] {Long.parseLong(new String(chars)), 0, index_of_smallest};
-        } else {
-            for (int i = index_of_smallest; i > index_of_replace; i--) {
-                chars[i] = chars[i-1];
-            }
-            chars[index_of_replace] = smallest;
-            return new long[] {Long.parseLong(new String(chars)), index_of_smallest, index_of_replace};
+        private static long build(String s, int i, int j) {
+            StringBuilder sb = new StringBuilder(s);
+            char c = sb.charAt(i);
+            sb.deleteCharAt(i);
+            sb.insert(j, c);
+            return Long.parseLong(sb.toString());
         }
     }
+
 }
