@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"regexp"
 )
 
 var vowels = map[string]int8{
@@ -27,24 +28,19 @@ func main() {
 	fmt.Printf("There are %d vowels\n", GetCount("andrea"))
 }
 
-
-
 //Best seen on codewars:
 func GetCount1(str string) (count int) {
-  r := regexp.MustCompile("[aeiou]")
-  vowels := r.FindAllString(str, -1)
-  return len(vowels)
+	r := regexp.MustCompile("[aeiou]")
+	vowels := r.FindAllString(str, -1)
+	return len(vowels)
 }
 
 func GetCount2(str string) (count int) {
-  for _, c := range str {
-    switch c {
-    case 'a', 'e', 'i', 'o', 'u':
-      count++
-    }
-  }
-  return count
+	for _, c := range str {
+		switch c {
+		case 'a', 'e', 'i', 'o', 'u':
+			count++
+		}
+	}
+	return count
 }
-
-
-
