@@ -7,7 +7,7 @@ import (
 func Snail(snailMap [][]int) []int {
 
 	if len(snailMap) == 0 || len(snailMap[0]) == 0 {
-		return snail
+		return []int{}
 	}
 
 	var snail = make([]int, len(snailMap)*len(snailMap))
